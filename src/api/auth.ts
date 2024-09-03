@@ -13,11 +13,12 @@ export const register = async ({ id, password, nickname }: AuthFormData) => {
     return response.data;
   } catch (error) {
     // 비즈니스 로직 개별적인 에러 처리
-    if (error instanceof AxiosError && error?.response?.status === 409) {
-      console.error('ID 중복 에러 발생', error.response.data);
-      alert('이미 존재하는 ID입니다.');
-    } else {
-      console.error('회원가입 중 에러 발생:', error);
+    if (error instanceof AxiosError && error?.response) {
+      if (error.response.status === 409) {
+        throw new Error('이미 존재하는 ID입니다.');
+      } else {
+        throw new Error('회원가입 중 오류가 발생했습니다.');
+      }
     }
     throw error;
   }
@@ -25,16 +26,23 @@ export const register = async ({ id, password, nickname }: AuthFormData) => {
 
 export const login = async ({ id, password }: AuthFormData) => {
   try {
-    const response = await authInstance.post('/login?expiresIn=10m', {
+    const response = await authInstance.post('/login?expiresIn=30m', {
       id: id,
       password: password
     });
     console.log('로그인 데이터 확인', response.data);
-    localStorage.setItem('accessToken', response.data.accessToken);
-    return response.data;
+    if (response.data.accessToken) {
+      localStorage.setItem('accessToken', response.data.accessToken);
+      return response.data;
+    }
   } catch (error) {
-    // 비즈니스 에러 로직 추가?
-    console.error('로그인 중 에러 발생', error);
+    if (error instanceof AxiosError && error?.response) {
+      if (error.response.status === 401) {
+        throw new Error('아이디 또는 비밀번호가 올바르지 않습니다.');
+      } else {
+        throw new Error('로그인 중 오류가 발생했습니다.');
+      }
+    }
     throw error;
   }
 };

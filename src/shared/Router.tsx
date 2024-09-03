@@ -3,24 +3,25 @@ import {
   RouterProvider,
   createBrowserRouter
 } from 'react-router-dom';
-import { useAuthStore } from '../store/useAuthStore';
 import SignInPage from '../pages/SignInPage';
 import MyPage from '../pages/MyPage';
 import { ReactElement } from 'react';
 import MainPage from '../pages/MainPage';
 import MainLayout from '../layout/MainLayout';
+import SignUpPage from '../pages/SignUpPage';
+import { useAuthUserStore } from '../store/useAuthUserStore';
 
 interface RouterProps {
   element: ReactElement;
 }
 
 const PublicRoute = ({ element }: RouterProps) => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuthUserStore();
   return isAuthenticated ? <Navigate to="/" /> : element;
 };
 
 const PrivateRoute = ({ element }: RouterProps) => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuthUserStore();
   return isAuthenticated ? element : <Navigate to="/sign-in" />;
 };
 
@@ -29,6 +30,10 @@ const AppRouter = () => {
     {
       path: '/sign-in',
       element: <PublicRoute element={<SignInPage />} />
+    },
+    {
+      path: '/sign-up',
+      element: <PublicRoute element={<SignUpPage />} />
     },
     {
       path: '/',

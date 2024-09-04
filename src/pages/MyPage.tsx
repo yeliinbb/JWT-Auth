@@ -4,6 +4,7 @@ import { queryKeys } from '../lib/constants/queryKeys';
 import { getUserInfo, updateProfile } from '../api/auth';
 import { UserInfo } from '../types/auth.types';
 import defaultImg from '../assets/default-profile.jpg';
+import { Link } from 'react-router-dom';
 
 const MyPage = () => {
   const [nickname, setNickname] = useState('');
@@ -74,7 +75,9 @@ const MyPage = () => {
 
   return (
     <div>
-      <button>back</button>
+      <Link to="/">
+        <button>back</button>
+      </Link>
       {isSuccess && (
         <div className="flex items-center">
           <div className="flex flex-col">

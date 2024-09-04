@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { AuthFormData, ProfileInfo } from '../types/auth.types';
+import { AuthFormData, UserInfo } from '../types/auth.types';
 import { authInstance } from './authInstance';
 
 export const register = async ({ id, password, nickname }: AuthFormData) => {
@@ -58,7 +58,7 @@ export const getUserInfo = async () => {
   }
 };
 
-export const updateProfile = async (formData: ProfileInfo) => {
+export const updateProfile = async (formData: FormData): Promise<UserInfo> => {
   try {
     const response = await authInstance.patch('/profile', formData, {
       headers: {

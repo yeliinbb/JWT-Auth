@@ -1,8 +1,3 @@
-export type ProfileInfo = {
-  avatar?: File;
-  nickname?: string;
-};
-
 export type AuthFormData = {
   id: string;
   password: string;
@@ -21,4 +16,9 @@ export type UserInfo = {
   id: string;
   nickname: string;
   success: boolean;
+};
+
+export type ProfileInfo = {
+  avatar?: File;
+  nickname?: string;
 };

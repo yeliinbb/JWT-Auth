@@ -1,5 +1,13 @@
+import Header from '../components/Header';
+import TodoList from '../components/TodoList';
+
 const MainPage = () => {
-  return <div className="text-3xl text-red-600">MainPage</div>;
+  return (
+    <>
+      <Header />
+      <TodoList />
+    </>
+  );
 };
 
 export default MainPage;

@@ -9,19 +9,19 @@ import { ReactElement } from 'react';
 import MainPage from '../pages/MainPage';
 import MainLayout from '../layout/MainLayout';
 import SignUpPage from '../pages/SignUpPage';
-import { useAuthUserStore } from '../store/useAuthUserStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface RouterProps {
   element: ReactElement;
 }
 
 const PublicRoute = ({ element }: RouterProps) => {
-  const { isAuthenticated } = useAuthUserStore();
+  const { isAuthenticated } = useAuthStore();
   return isAuthenticated ? <Navigate to="/" /> : element;
 };
 
 const PrivateRoute = ({ element }: RouterProps) => {
-  const { isAuthenticated } = useAuthUserStore();
+  const { isAuthenticated } = useAuthStore();
   return isAuthenticated ? element : <Navigate to="/sign-in" />;
 };
 

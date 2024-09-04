@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthUserStore } from '../store/useAuthUserStore';
 import { login, register } from '../api/auth';
 import { AuthValidation } from '../types/auth.types';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface AuthFormProps {
   isSignUp: boolean;
@@ -14,7 +14,7 @@ const useAuthForm = ({ isSignUp }: AuthFormProps) => {
   const nicknameRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<Partial<AuthValidation>>({});
   const navigate = useNavigate();
-  const { isLogin } = useAuthUserStore();
+  const { isLogin } = useAuthStore();
 
   const validate = () => {
     // 유효성 검사 로직
@@ -58,8 +58,8 @@ const useAuthForm = ({ isSignUp }: AuthFormProps) => {
         alert('회원가입이 완료되었습니다.');
         navigate('/sign-in');
       } else {
-        const response = await login(formData);
-        isLogin({ id: response.id });
+        await login(formData);
+        isLogin();
         alert('로그인이 완료되었습니다.');
         navigate('/');
       }

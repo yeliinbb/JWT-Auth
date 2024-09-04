@@ -26,7 +26,7 @@ export const register = async ({ id, password, nickname }: AuthFormData) => {
 
 export const login = async ({ id, password }: AuthFormData) => {
   try {
-    const response = await authInstance.post('/login?expiresIn=30m', {
+    const response = await authInstance.post('/login?expiresIn=60m', {
       id: id,
       password: password
     });
@@ -65,6 +65,7 @@ export const updateProfile = async (formData: ProfileInfo) => {
         'Content-Type': 'multipart/form-data'
       }
     });
+    console.log('유저 업데이트 데이터 확인', response.data);
     return response.data;
   } catch (error) {
     console.error('프로필 업데이트 중 에러 발생', error);

@@ -1,6 +1,6 @@
 export type ProfileInfo = {
-  avatar: string;
-  nickname: string;
+  avatar?: File;
+  nickname?: string;
 };
 
 export type AuthFormData = {
@@ -14,4 +14,11 @@ export type AuthValidation = {
   id: string;
   password: string;
   nickname?: string;
+};
+
+export type UserInfo = {
+  avatar: null | string;
+  id: string;
+  nickname: string;
+  success: boolean;
 };

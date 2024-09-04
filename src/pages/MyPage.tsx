@@ -42,11 +42,38 @@ const MyPage = () => {
   });
 
   const handleUpdateProfile = async () => {
+    if (!nickname.trim()) {
+      alert('닉네임을 입력해주세요.');
+      return;
+    }
+
+    if (nickname.length < 2 || nickname.length > 10) {
+      alert('닉네임은 2자 이상 10자 이내로 입력해주세요.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nickname', nickname);
+
     const avatarFile = imgRef?.current?.files?.[0];
     if (avatarFile) {
+      if (avatarFile.size > 1 * 1024 * 1024) {
+        alert('파일 크기는 1MB이하여야 합니다.');
+        return;
+      }
+
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!allowedTypes.includes(avatarFile.type)) {
+        alert('JPG, PNG, GIF형식의 이미지만 업로드 가능합니다.');
+        return;
+      }
+
       formData.append('avatar', avatarFile);
+    }
+
+    if (nickname === userInfo?.nickname && !avatarFile) {
+      alert('변경사항이 없습니다.');
+      return;
     }
     profileUpdateMutation.mutate(formData);
   };

@@ -1,7 +1,5 @@
-// import { StrictMode } from 'react';
-// import { createRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App.tsx';
 import './index.css';
 import Providers from './Providers.tsx';
@@ -14,7 +12,7 @@ Sentry.init({
     Sentry.replayIntegration()
   ],
   // Tracing
-  tracesSampleRate: 1.0, //  Capture 100% of the transactions
+  tracesSampleRate: 0.6, //  Capture 100% of the transactions
   // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
   tracePropagationTargets: [
     'localhost',
@@ -27,11 +25,11 @@ Sentry.init({
   environment: import.meta.env.MODE // development, production 등
 });
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!);
+root.render(
   <React.StrictMode>
     <Providers>
       <App />
     </Providers>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

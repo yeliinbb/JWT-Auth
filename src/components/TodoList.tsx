@@ -17,10 +17,10 @@ const TodoList = () => {
   });
 
   useEffect(() => {
-    if (isError) {
+    if (isError && error instanceof Error) {
       console.error('todos data error', error);
     }
-  }, []);
+  }, [isError, error]);
 
   if (isSuccess) {
     console.log('todoList', todoList);

@@ -1,7 +1,11 @@
 {
-    "files": [],
-    "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
-    "compilerOptions": {
-        "esModuleInterop": true
-    }
+  "files": [],
+  "references": [],
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["src/**/*", "src/test/**/*"]
 }

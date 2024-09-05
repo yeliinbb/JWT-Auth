@@ -102,64 +102,83 @@ const MyPage = () => {
 
   return (
     <div>
-      <Link to="/">
-        <button>back</button>
-      </Link>
-      {isSuccess && (
-        <div className="flex items-center">
-          <div className="flex flex-col">
-            <img
-              src={previewImg || userInfo.avatar || defaultImg}
-              alt="프로필 이미지"
-              className="w-32 h-32 object-cover rounded-full"
-            />
-            {isEditing && (
-              <>
-                <label htmlFor="profile-img" className="cursor-pointer">
-                  Upload Image
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="profile-img"
-                  ref={imgRef}
-                  onChange={onChangeImgFile}
-                  className="hidden"
-                />
-              </>
-            )}
+      <div className="flex items-center justify-between w-full h-25 p-2 shadow-md">
+        <Link to="/">
+          <button className="font-bold text-xl bg-slate-300 px-4 py-2 rounded-xl hover:bg-slate-200">
+            back
+          </button>
+        </Link>
+      </div>
+      <section className="flex flex-col items-center justify-center p-4 gap-5 h-ful w-full">
+        {isSuccess && (
+          <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center mb-3">
+              <img
+                src={previewImg || userInfo.avatar || defaultImg}
+                alt="프로필 이미지"
+                className="w-40 h-40 object-cover rounded-full shadow-lg mb-3"
+              />
+              {isEditing && (
+                <>
+                  <label
+                    htmlFor="profile-img"
+                    className="cursor-pointer bg-slate-100 shadow-lg text-base font-medium px-2 py-1 rounded-lg hover:bg-slate-50 text-center"
+                  >
+                    Upload Image
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="profile-img"
+                    ref={imgRef}
+                    onChange={onChangeImgFile}
+                    className="hidden"
+                  />
+                </>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <label className="text-xl font-medium text-center">닉네임</label>
+              <input
+                type="text"
+                id="nickname"
+                placeholder="변경할 닉네임을 입력해주세요."
+                defaultValue={userInfo ? userInfo?.nickname : nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                disabled={!isEditing}
+                className={`${
+                  isEditing
+                    ? 'border border-gray-300 px-2'
+                    : 'border-none bg-transparent'
+                } py-1 rounded-lg text-center text-lg font-medium w-[7rem]`}
+              />
+            </div>
           </div>
-          <div className="flex flex-col">
-            <label>nickname</label>
-            <input
-              type="text"
-              id="nickname"
-              placeholder="변경할 닉네임을 입력해주세요."
-              defaultValue={userInfo ? userInfo?.nickname : nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              disabled={!isEditing}
-              className={
-                isEditing
-                  ? 'border border-gray-300'
-                  : 'border-none bg-transparent'
-              }
-            />
+        )}
+        {isEditing ? (
+          <div className="flex gap-2">
+            <button
+              onClick={handleUpdateProfile}
+              className="px-3 py-1 bg-blue-500 rounded-lg text-white font-medium hover:bg-blue-400"
+            >
+              수정
+            </button>
+            <button
+              onClick={handleCancelEdit}
+              className="px-3 py-1 bg-gray-400 rounded-lg text-white font-medium hover:bg-gray-300"
+            >
+              취소
+            </button>
           </div>
-        </div>
-      )}
-      {isEditing ? (
-        <div>
-          <button onClick={handleUpdateProfile}>수정</button>
-          <button onClick={handleCancelEdit}>취소</button>
-        </div>
-      ) : (
-        <button
-          className="bg-blue-400 font-medium text-white"
-          onClick={handleClickEdit}
-        >
-          프로필 수정하기
-        </button>
-      )}
+        ) : (
+          <button
+            className="bg-blue-500 text-lg font-medium text-white px-3 py-1 rounded-lg hover:bg-blue-400"
+            onClick={handleClickEdit}
+          >
+            프로필 수정하기
+          </button>
+        )}
+      </section>
     </div>
   );
 };

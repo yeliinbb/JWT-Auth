@@ -25,12 +25,26 @@ const TodoList = () => {
   if (isSuccess) {
     console.log('todoList', todoList);
   }
+
   return (
-    <div>
-      <h2>Todo List</h2>
+    <div className="p-1">
+      <h2 className="font-bold text-lg">Todo List</h2>
       {isPending && <span>투두 리스트를 가져오는 중입니다.</span>}
-      {isSuccess &&
-        todoList.map((todo) => <div key={todo.id}>{todo.title}</div>)}
+      <ul className="grid grid-cols-4 gap-2 p-4">
+        {isSuccess &&
+          todoList.map((todo) => (
+            <li
+              key={todo.id}
+              className="flex flex-col p-5 rounded-3xl shadow-md bg-slate-50"
+            >
+              <span>No.{todo.id}</span>
+              <span className="text-base font-medium truncate">
+                Title : {todo.title}
+              </span>
+              <span>userId : {todo.userId}</span>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };

@@ -27,14 +27,6 @@ Sentry.init({
   environment: import.meta.env.MODE // development, production 등
 });
 
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <Providers>
-//       <App />
-//     </Providers>
-//   </StrictMode>
-// );
-
 ReactDOM.render(
   <React.StrictMode>
     <Providers>

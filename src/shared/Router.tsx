@@ -10,6 +10,7 @@ import MainPage from '../pages/MainPage';
 import MainLayout from '../layout/MainLayout';
 import SignUpPage from '../pages/SignUpPage';
 import { useAuthStore } from '../store/useAuthStore';
+import AuthLayout from '../layout/AuthLayout';
 
 interface RouterProps {
   element: ReactElement;
@@ -22,26 +23,30 @@ const PublicRoute = ({ element }: RouterProps) => {
 
 const PrivateRoute = ({ element }: RouterProps) => {
   const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? element : <Navigate to="/sign-in" />;
+  return isAuthenticated ? element : <Navigate to="/auth/sign-in" />;
 };
 
 const AppRouter = () => {
   const router = createBrowserRouter([
     {
-      path: '/sign-in',
-      element: <PublicRoute element={<SignInPage />} />
-    },
-    {
-      path: '/sign-up',
-      element: <PublicRoute element={<SignUpPage />} />
+      path: '/auth',
+      element: <PublicRoute element={<AuthLayout />} />,
+      children: [
+        { path: 'sign-in', element: <SignInPage /> },
+        { path: 'sign-up', element: <SignUpPage /> }
+      ]
     },
     {
       path: '/',
       element: <PrivateRoute element={<MainLayout />} />,
       children: [
-        { path: '/', element: <MainPage /> },
-        { path: '/my-page', element: <MyPage /> }
+        { index: true, element: <MainPage /> },
+        { path: 'my-page', element: <MyPage /> }
       ]
+    },
+    {
+      path: '*',
+      element: <Navigate to="/" replace />
     }
   ]);
   return <RouterProvider router={router} />;

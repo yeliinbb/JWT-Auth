@@ -2,5 +2,16 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "script-src 'self' https://*.sentry-cdn.com https://moneyfulpublicpolicy.co.kr https://jsonplaceholder.typicode.com; connect-src 'self' https://*.sentry.io https://moneyfulpublicpolicy.co.kr https://jsonplaceholder.typicode.com"
+        }
+      ]
+    }
   ]
 }

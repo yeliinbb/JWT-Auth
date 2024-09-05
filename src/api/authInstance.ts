@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/useAuthStore';
+import * as Sentry from '@sentry/react';
 
 export const authInstance = axios.create({
   baseURL: import.meta.env.VITE_AUTH_API_URL,
@@ -17,7 +18,13 @@ authInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    Sentry.captureException(error, {
+      tags: { style: 'request_error' },
+      extra: { config: error.config }
+    });
+    return Promise.reject(error);
+  }
 );
 
 // 응답 인터셉터
@@ -38,6 +45,16 @@ authInstance.interceptors.response.use(
       // 그 외의 에러
       console.error('응답 에러:', error.message);
     }
+
+    Sentry.captureException(error, {
+      tags: { style: 'response_error', status },
+      extra: {
+        url: error.config.url,
+        method: error.config.method,
+        response: error.response ? error.response.data : null
+      }
+    });
+
     return Promise.reject(error);
   }
 );

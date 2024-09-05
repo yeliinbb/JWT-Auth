@@ -1,6 +1,10 @@
 {
   "files": [],
-  "references": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.test.json" }
+  ],
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "node",

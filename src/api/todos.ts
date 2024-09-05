@@ -1,15 +1,11 @@
-import axios from 'axios';
-
-const accessToken = localStorage.getItem('accessToken');
-
-const todosApi = axios.create({
-  baseURL: import.meta.env.VITE_JSON_API_URL
-});
+import { todosInstance } from './todoInstance';
 
 export const getTodoList = async () => {
+  const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) return;
+
   try {
-    const response = await todosApi.get('/todos?userId=1');
+    const response = await todosInstance.get('/todos?userId=1');
     console.log('todo data', response.data);
     return response.data;
   } catch (error) {
